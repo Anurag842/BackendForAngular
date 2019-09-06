@@ -200,12 +200,12 @@ public class HomeController {
 	@Autowired
 	HttpSession session;
 
-	@RequestMapping(value="/viewClientEvent/{clientId}" , method=RequestMethod.GET)
-	public String viewClientEvent(@PathVariable int clientId){
+	@RequestMapping(value="/viewClientEvent/{clientId}" , method=RequestMethod.GET,headers="Accept=application/json")
+	public @ResponseBody List<Events> viewClientEvent(@PathVariable int clientId){
 		System.out.println("Hello 1");
 		session.setAttribute("clientId",clientId);
-		
-		return "cal";
+		List<Events> eventList=eventDao.viewAllEventsById(clientId);
+		return eventList;
 	}
 	
 	@RequestMapping(value="/viewAllEvents" , method=RequestMethod.GET,headers="Accept=application/json")
